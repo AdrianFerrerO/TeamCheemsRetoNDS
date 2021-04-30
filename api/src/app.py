@@ -5,7 +5,7 @@ from models.models import *
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "6b71f342fb3d3368afe1eacbf620e27e"
+#app.config['SECRET_KEY'] = "6b71f342fb3d3368afe1eacbf620e27e"
 
 
 @app.route("/")
@@ -44,9 +44,10 @@ def auth2():
 
 @app.route("/api/products/<items>")
 #@token_required
-
 def get_products(items):
-    return make_response(jsonify({"message": 0}), 200)
+    data = get_products_sample(int(items))
+    
+    return make_response(jsonify({"data": data}), 200)
 
 
 @app.route("/api/users/<username>")
@@ -78,7 +79,7 @@ def predict():
     tmp = make_prediction(input)
     return make_response(jsonify({"fraud": str(tmp)}), 200)
 
-
+"""
 @app.route('/token', methods=['POST'])
 def get_token():
     try:
@@ -93,7 +94,7 @@ def get_token():
 
     except:
         return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)
-
+"""
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

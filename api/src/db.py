@@ -16,5 +16,20 @@ def get_user_info(username):
         return False
 
 
-def get_products(n):
-    pass
+def get_products_sample(n):
+    
+    tmp = products.aggregate( [ { "$sample": { "size": n } } ])
+    data = list(tmp)
+    res = []
+
+    for e in data:
+        elem = {
+            "merchant": e["merchant"],
+            "category": e["category"],
+            "merchant_location": e["merchant_location(lat,long)"]
+        }
+
+        res.append(elem)
+
+    return res
+
