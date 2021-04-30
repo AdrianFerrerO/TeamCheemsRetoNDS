@@ -23,7 +23,7 @@ Transaction.prototype.createTransaction = function(){
     merchant.setAttribute("class", "d-flex w-100 m-0");
     merchant_location.setAttribute("class", "d-flex w-100 m-0");
     amount.setAttribute("class", "d-flex w-100 justify-content-end m-0");
-    list_element_content.setAttribute("class", "d-flex w-100 flex-wrap p-3");
+    list_element_content.setAttribute("class", "d-flex w-100 flex-wrap p-3 list-element");
     list_element.setAttribute("class", "row m-4")  
     category.innerHTML = this.category;
     merchant.innerHTML = this.merchant;
@@ -36,7 +36,7 @@ Transaction.prototype.createTransaction = function(){
     if (this.button === true){
         var div_button = document.createElement("div")
         var button = document.createElement("button")
-        button.setAttribute("class", "")
+        button.setAttribute("class", "btn btn-outline-primary")
         button.innerHTML = "Realizar Transacción"
 
         button.addEventListener("click", function(){

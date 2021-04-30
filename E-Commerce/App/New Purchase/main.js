@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var Transaction = function (transaction_id, merchant, category, merchant_lat, merchant_long, father, button=false){
     this.transaction_id = transaction_id;
     this.merchant = merchant;
@@ -96,7 +95,10 @@ for (let i = 0; i < 20; i++){
     new Transaction(transactions["transaction_id"], transactions["merchant"], transactions["category"], transactions["merchant_location"][0], transactions["merchant_location"][1], father, true)
 }
 
-=======
+document.getElementById("transaction-submit").addEventListener("click", function(event){
+    event.preventDefault()
+})
+
 /* 
 
 endpoint: http://localhost:5000/api/products/<int:numero de productos deseados>
@@ -161,9 +163,9 @@ let age = 45 //int
 let m_lat = 10.00
 let m_long = 10.00
 
-let url = `http://localhost:5000/api/predict?merchant=${merchand}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
+let url_model = `http://localhost:5000/api/predict?merchant=${merchand}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
 
-fetch(url)
+fetch(url_model)
   .then(response => response.json())
   .then(data => console.log(data));
->>>>>>> 24fc38906da6020e2ab2efcc240e3312974a99eb
+
