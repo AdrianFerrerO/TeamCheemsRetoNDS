@@ -1,4 +1,3 @@
-
 var Transaction = function (transaction_id, merchant, category, merchant_lat, merchant_long, father, button=false){
     this.transaction_id = transaction_id;
     this.merchant = merchant;
