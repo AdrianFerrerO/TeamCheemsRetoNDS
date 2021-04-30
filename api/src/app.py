@@ -16,23 +16,43 @@ def test():
 @app.route("/api/auth", methods=['POST'])
 #token_required
 def auth():
-    return make_response(jsonify({"message": True}), 200)
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+    auth = check_credentials(username, password)
+    
+    if auth:
+        return make_response(jsonify({"message": "True"}), 200)
+    else:
+        return make_response(jsonify({"message": "False"}), 401)
 
 
 @app.route("/api/auth2", methods=['POST'])
 #token_required
 def auth2():
-    return make_response(jsonify({"message": True}), 200)
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+    ip = params['ip']
+    auth = two_factor_auth(username, password, ip)
+    
+    if auth:
+        return make_response(jsonify({"message": "True"}), 200)
+    else:
+        return make_response(jsonify({"message": "False"}), 401)
 
 
 @app.route("/api/products/<items>")
 #@token_required
+
 def get_products(items):
-    return make_response(jsonify({"message": True}), 200)
+    return make_response(jsonify({"message": 0}), 200)
 
 
 @app.route("/api/users/<username>")
 #@token_required
+#var user_info = {"user_name":"seb123", "full_name":"Sebas", "gender":"M", "age":18, "coordinates":[1, 2]}
+#var transactions= [{"transaction_id" : 123, "category": "string", "marchant":"string", "merchant_location":[123, 456], "amount":1234}]
 def get_user(username):
 
     data = get_user_info(username)
@@ -52,8 +72,6 @@ def get_user(username):
 
 @app.route("/api/predict")
 #@token_required
-# ['fraud_Medhurst PLC', 'shopping_net', 844.8, 'M', 35.9946, -81.7266, 885, 32, 35.987802, -81.25433199999998]
-# (merchant, category, amt, gender,lat, long, city_pop, age, merch_lat, merchant_long)
 def predict():
     args = get_params(request.args)
     input = [args["merchant"], args["category"], float(args["amt"]), args["gender"], float(args["lat"]), float(args["long"]), float(args["city_pop"]), int(args["age"]), float(args["merch_lat"]), float(args["merch_long"])]
@@ -62,7 +80,7 @@ def predict():
 
 
 @app.route('/token', methods=['POST'])
-def login():
+def get_token():
     try:
         params = request.get_json()
         username = params['username']
@@ -79,3 +97,39 @@ def login():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+"""
+user = {
+    "ObjectId": 0,
+    "username": "first_last",
+    "fullname": "Aldo Sandoval",
+    "gender": "M",
+    "age": 18,
+    "coordinates": [20.1154, -99.01154],
+    "password": "password", #generado hasheando el username con md5
+    "password_2": "password_2":#generado hasheando la edad con md5
+    "ip": "127.0.0.1",
+    "ip_hash": "asdgasrfhasdfgherthrt", #generado hasheando la ip con md5
+    "transactions": [{
+        "transaction_id": 123, 
+        "category": "string", 
+        "marchant":"string", 
+        "merchant_location":[12.47546, 45.5466], 
+        "amount":1234
+    },
+    {
+        "transaction_id": 123, 
+        "category": "string", 
+        "marchant":"string", 
+        "merchant_location":[12.47546, 45.5466], 
+        "amount":1234
+    }]
+}
+
+product = {
+    "ObjectId": 0, #Generado por mongo
+    "merchant": "Name",
+    "category": "category",
+    "merchant_location": [25.1354, 25.1234]
+}
+"""

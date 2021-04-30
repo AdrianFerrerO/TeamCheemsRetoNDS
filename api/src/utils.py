@@ -3,6 +3,7 @@ from flask import jsonify, request
 import datetime
 from functools import wraps
 from security.admins import db
+import hashlib
 
 """
 def get_params(args, token=False):
@@ -41,6 +42,28 @@ def check_identity(username, password):
         return False
 
 
+def check_credentials(username, password):
+    passwd = "5f4dcc3b5aa765d61d8327deb882cf99" #Mongo normal passwd
+    tmp = hashlib.md5(password.encode()).hexdigest()
+    
+    if passwd == tmp:
+        return True
+    else:
+        return False
+
+
+def two_factor_auth(username, password, ip):
+    passwd_real = "5f4dcc3b5aa765d61d8327deb882cf99" #Mongo 2fa passwd
+    ip_real =  "f528764d624db129b32c21fbca0cb8d6" # Mongo ip
+    passwd_hash = hashlib.md5(password.encode()).hexdigest()
+    ip_hash = hashlib.md5(ip.encode()).hexdigest()
+
+    if passwd_real == passwd_hash and ip_real == ip_hash:
+        return True
+    else:
+        return False
+
+
 def create_token(username, key):
     token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(days=30)}, key, algorithm="HS256")
 
@@ -67,23 +90,7 @@ def token_required(f):
 
     return decorated
 
-"""
-def build_json(hardness, prod_rate, quality):
-    scaled_params = scaler(hardness, prod_rate, quality)
-    cluster = make_clustering(scaled_params)
-    cm = predict_cm(scaled_params, cluster)
-    cm_95 = predict_cm_95(scaled_params, cluster)
-    cmg = predict_cmg(scaled_params)
-    cmg_95 = predict_cmg_95(scaled_params)
-    print(cluster)
 
-    data = {
-        "cluster": cluster,
-        "CM": cm,
-        "CM_95" : cm_95,
-        "CMG" : cmg,
-        "CMG_95" : cmg_95
-    }
-
-    return data
-"""
+if __name__ == '__main__':
+    #print(check_credentials("aldosandov", "password", fa=True))
+    print(two_factor_auth("aldosandov", "password", "127.0.0.1"))
