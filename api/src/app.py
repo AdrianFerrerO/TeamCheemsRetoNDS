@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify, make_response
 from utils import *
 from db import *
+from models.models import *
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "6b71f342fb3d3368afe1eacbf620e27e"
 
 
 @app.route("/")
@@ -15,23 +15,44 @@ def test():
 @app.route("/api/auth", methods=['POST'])
 #token_required
 def auth():
-    return make_response(jsonify({"message": True}), 200)
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+    auth = check_credentials(username, password)
+    
+    if auth:
+        return make_response(jsonify({"message": "True"}), 200)
+    else:
+        return make_response(jsonify({"message": "False"}), 401)
 
 
 @app.route("/api/auth2", methods=['POST'])
 #token_required
 def auth2():
-    return make_response(jsonify({"message": True}), 200)
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+    ip = params['ip']
+    auth = two_factor_auth(username, password, ip)
+    
+    if auth:
+        return make_response(jsonify({"message": "True"}), 200)
+    else:
+        return make_response(jsonify({"message": "False"}), 401)
 
 
 @app.route("/api/products/<items>")
 #@token_required
-def get_products(items)
-    return make_response(jsonify({"message": True}), 200)
+def get_products(items):
+    data = get_products_sample(int(items))
+    
+    return make_response(jsonify({"data": data}), 200)
 
 
 @app.route("/api/users/<username>")
 #@token_required
+#var user_info = {"user_name":"seb123", "full_name":"Sebas", "gender":"M", "age":18, "coordinates":[1, 2]}
+#var transactions= [{"transaction_id" : 123, "category": "string", "marchant":"string", "merchant_location":[123, 456], "amount":1234}]
 def get_user(username):
 
     data = get_user_info(username)
@@ -52,23 +73,11 @@ def get_user(username):
 @app.route("/api/predict")
 #@token_required
 def predict():
-    return make_response(jsonify({"message": data}), 200)
+    args = get_params(request.args)
+    input = [args["merchant"], args["category"], float(args["amt"]), args["gender"], float(args["lat"]), float(args["long"]), float(args["city_pop"]), int(args["age"]), float(args["merch_lat"]), float(args["merch_long"])]
+    tmp = make_prediction(input)
+    return make_response(jsonify({"fraud": str(tmp)}), 200)
 
-
-@app.route('/token', methods=['POST'])
-def login():
-    try:
-        params = request.get_json()
-        username = params['username']
-        password = params['password']
-
-        if check_identity(username, password):
-            return jsonify({'token' : create_token(username, app.config['SECRET_KEY'])})
-        else: 
-            raise Exception
-
-    except:
-        return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)
 
 
 if __name__ == '__main__':

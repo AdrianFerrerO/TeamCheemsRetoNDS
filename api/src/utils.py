@@ -2,45 +2,51 @@ import jwt
 from flask import jsonify, request
 import datetime
 from functools import wraps
-from security.admins import db
+#from security.admins import db
+import hashlib
+
+
+def get_params(args):
+    params = args.to_dict()
+
+    return params
 
 """
-def get_params(args, token=False):
-    args = args.to_dict()
-    params = ['dureza', 'tasaprod', 'calidad', 'token']
-
-    if len(args) == 4 and list(args.keys()) == params:
-        try:
-            hardness = round(float(args[params[0]]), 3)
-            prod_rate = round(float(args[params[1]]), 3)
-            quality = round(float(args[params[2]]), 3)
-            jwt = args[params[3]]
-        
-            if token:
-                return jwt
-            else:
-                return hardness, prod_rate, quality
-
-        except:
-            raise SyntaxError("Values of parameters aren't valid. Only int or float type are allowed. Read API docs.")
-
-    else:
-        raise SyntaxError("Parameters are missing or not allowed. Read API docs.")
-"""
-
 def check_identity(username, password):
     if username in db["users"] and password in db["passwords"]:
         return True
     else:
         return False
+"""
+
+def check_credentials(username, password):
+    passwd = "5f4dcc3b5aa765d61d8327deb882cf99" #Mongo normal passwd
+    tmp = hashlib.md5(password.encode()).hexdigest()
+    
+    if passwd == tmp:
+        return True
+    else:
+        return False
 
 
+def two_factor_auth(username, password, ip):
+    passwd_real = "5f4dcc3b5aa765d61d8327deb882cf99" #Mongo 2fa passwd
+    ip_real =  "f528764d624db129b32c21fbca0cb8d6" # Mongo ip
+    passwd_hash = hashlib.md5(password.encode()).hexdigest()
+    ip_hash = hashlib.md5(ip.encode()).hexdigest()
+
+    if passwd_real == passwd_hash and ip_real == ip_hash:
+        return True
+    else:
+        return False
+
+"""
 def create_token(username, key):
     token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(days=30)}, key, algorithm="HS256")
 
     return token
-
-
+"""
+"""
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -60,24 +66,8 @@ def token_required(f):
         return f(*args, **kwargs)
 
     return decorated
-
 """
-def build_json(hardness, prod_rate, quality):
-    scaled_params = scaler(hardness, prod_rate, quality)
-    cluster = make_clustering(scaled_params)
-    cm = predict_cm(scaled_params, cluster)
-    cm_95 = predict_cm_95(scaled_params, cluster)
-    cmg = predict_cmg(scaled_params)
-    cmg_95 = predict_cmg_95(scaled_params)
-    print(cluster)
 
-    data = {
-        "cluster": cluster,
-        "CM": cm,
-        "CM_95" : cm_95,
-        "CMG" : cmg,
-        "CMG_95" : cmg_95
-    }
-
-    return data
-"""
+if __name__ == '__main__':
+    #print(check_credentials("aldosandov", "password", fa=True))
+    print(two_factor_auth("aldosandov", "password", "127.0.0.1"))
