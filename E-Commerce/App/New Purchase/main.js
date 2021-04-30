@@ -95,9 +95,7 @@ for (let i = 0; i < 20; i++){
     new Transaction(transactions["transaction_id"], transactions["merchant"], transactions["category"], transactions["merchant_location"][0], transactions["merchant_location"][1], father, true)
 }
 
-document.getElementById("transaction-submit").addEventListener("click", function(event){
-    event.preventDefault()
-})
+
 
 /* 
 
@@ -130,9 +128,7 @@ let len_of_sample = 10
 
 let url = `http://localhost:5000/api/products/${len_of_sample}`
 
-fetch(url)
-  .then(response => response.json())
-  .then(data => console.log(data));
+
 
 /* 
 endpoint modelo: http://localhost:5000/api/predict?
@@ -152,7 +148,7 @@ retorna:
     "fraud": "True" or "False"
 }
 */
-let marchand = "nombre"
+let merchand = "nombre"
 let category = "categoria"
 let amt = 10.00
 let gender = "M"
@@ -164,8 +160,3 @@ let m_lat = 10.00
 let m_long = 10.00
 
 let url_model = `http://localhost:5000/api/predict?merchant=${merchand}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
-
-fetch(url_model)
-  .then(response => response.json())
-  .then(data => console.log(data));
-

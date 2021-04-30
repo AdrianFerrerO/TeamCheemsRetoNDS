@@ -65,7 +65,7 @@ var father = document.getElementById("transactions-list")
 
 
 document.addEventListener("load", async function(){
-    const url = "/";
+    const url = "";
     //const csrftoken = getCookie('csrftoken');
     request_response = await fetch(
       url, 
@@ -87,7 +87,7 @@ document.addEventListener("load", async function(){
 
 
 document.addEventListener("load", async function(){
-    const url = "/";
+    const url = "";
     //const csrftoken = getCookie('csrftoken');
     request_response = await fetch(
       url, 
@@ -125,7 +125,20 @@ return cookieValue;
 }
   
 
-var user_info = {"user_name":"seb123", "full_name":"Sebas", "gender":"M", "age":18, "coordinates":[1, 2]}
+var user_info = {'age': 53,
+'full_name': 'Jeff Elliott',
+'gender': 'M',
+'age': 33,
+'coordinates': [ 33.9659, -80.9355],
+'user_name': 'Jeff_Elliott'}
+
+var data = user_info
+document.getElementById("user_name").innerHTML = data["user_name"]
+document.getElementById("full_name").innerHTML = data["full_name"]
+document.getElementById("gender").innerHTML = data["gender"]
+document.getElementById("age").innerHTML = data["age"]
+document.getElementById("coordinates").innerHTML = `${data["coordinates"][0]}, ${data["coordinates"][1]}`
+
 var transactions= [{"transaction_id" : 123, "category": "string", "marchant":"string", "merchant_location":[123, 456], "amount":1234}]
 
 /* 
