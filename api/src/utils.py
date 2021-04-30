@@ -28,6 +28,12 @@ def get_params(args, token=False):
         raise SyntaxError("Parameters are missing or not allowed. Read API docs.")
 """
 
+def get_params(args):
+    params = args.to_dict()
+
+    return params
+
+
 def check_identity(username, password):
     if username in db["users"] and password in db["passwords"]:
         return True

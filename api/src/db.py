@@ -6,11 +6,12 @@ db = client.get_database('fraud_db')
 
 users = db.users
 products = db.products
+#print(users.count(), products.count())
 
 
 def get_user_info(username):
     try:
-        return records.find_one({"username": username})
+        return users.find_one({"username": username})
     except:
         return False
 

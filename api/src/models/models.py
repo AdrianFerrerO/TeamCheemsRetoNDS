@@ -1,14 +1,12 @@
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-#from tensorflow.keras.layers import Dense
-#from tensorflow.keras.models import Sequential
-#import tensorflow.keras.backend as K
-#import tensorflow as tf
+import tensorflow as tf
 from joblib import load
 import os
 
 
 path = os.path.dirname(os.path.realpath(__file__)) + '/persistence/'
+print(path)
 
 
 def data_treatment(entrada):
@@ -49,12 +47,14 @@ def log_loss_penalized(y_true, y_pred):
     loss = -(1/1102173)*K.sum( 10*y_true * K.log(K.abs(y_pred+1*10**-8))+ (1-y_true)*K.log(K.abs(1-y_pred+ 1*10**-8)))
     return loss
 
-    vector_procesado = data_treatment( ["fraud_Rippin, Kub and Mann", "grocery_pos", 16.5, "M", 36.0788,-81.1781 , 1000,21, 36.011293,-82.048315] )
+
+def make_prediction(input):
+    vector_procesado = data_treatment(input)
 
     with open(path + "th_1.npy", 'rb') as f:
         th_ = np.load(f)
 
     NN_clf_loaded = tf.keras.models.load_model(path + "NN_CLF_1.h5", custom_objects = {"log_loss_penalized":log_loss_penalized})
     prediction = (NN_clf_loaded.predict(vector_procesado.reshape(1,-1))>th_)[0][0]
-    
+
     return prediction

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from utils import *
 from db import *
+from models.models import *
 
 
 app = Flask(__name__)
@@ -26,7 +27,7 @@ def auth2():
 
 @app.route("/api/products/<items>")
 #@token_required
-def get_products(items)
+def get_products(items):
     return make_response(jsonify({"message": True}), 200)
 
 
@@ -51,8 +52,13 @@ def get_user(username):
 
 @app.route("/api/predict")
 #@token_required
+# ['fraud_Medhurst PLC', 'shopping_net', 844.8, 'M', 35.9946, -81.7266, 885, 32, 35.987802, -81.25433199999998]
+# (merchant, category, amt, gender,lat, long, city_pop, age, merch_lat, merchant_long)
 def predict():
-    return make_response(jsonify({"message": data}), 200)
+    args = get_params(request.args)
+    input = [args["merchant"], args["category"], float(args["amt"]), args["gender"], float(args["lat"]), float(args["long"]), float(args["city_pop"]), int(args["age"]), float(args["merch_lat"]), float(args["merch_long"])]
+    tmp = make_prediction(input)
+    return make_response(jsonify({"fraud": str(tmp)}), 200)
 
 
 @app.route('/token', methods=['POST'])
