@@ -16,6 +16,10 @@ de nuestro repositorio es la prevención y detección del fraude en el e-commerc
 
 -   El archivo `ModeloFinancieroBenchmark_E2.ipynb` contiene el primer avance en código formando parte de la segunda entrega.
 
+-   El archivo `ModeloFinancieroBenchmark_E2.ipynb` es actualizado con los últimos ajustes para la entrega final.
+-   
+-   Fue creado un [dashboard](https://share.streamlit.io/adrianfo-16/hackmx_retonds_streamlitapp/main/main.py) en streamlit para apoyar la visualización del dataset utilizado. 
+
 ## Integrantes
 
 -   [Adrián Ferrer](https://github.com/AdrianFO-16) - [aafo1416@gmail.com](mailto:correo)
