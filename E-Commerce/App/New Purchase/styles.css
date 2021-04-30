@@ -1,3 +1,26 @@
 html , body{
     height: 100%;
+    font-family: 'Asap', sans-serif;
+}
+
+.transactions-available{
+    height: 94%;
+}
+
+#transactions-list{
+    padding: 0;
+    margin: 0;
+}
+
+#pay-login{
+    background-color: #f9a545;
+    border-radius: 10px;
+}
+
+li{
+    border-radius: 10px;
+}
+
+#password{
+    border-radius: 10px;
 }
