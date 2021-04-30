@@ -20,6 +20,8 @@ de nuestro repositorio es la prevención y detección del fraude en el e-commerc
 
 -   Fue creado un [dashboard](https://share.streamlit.io/adrianfo-16/hackmx_retonds_streamlitapp/main/main.py) en streamlit para apoyar la visualización del dataset utilizado. 
 
+-   El archivo `HACKMX RETO NDS.pdf` es un diagrama de la metología final propuesta.
+
 ## Integrantes
 
 -   [Adrián Ferrer](https://github.com/AdrianFO-16) - [aafo1416@gmail.com](mailto:correo)
