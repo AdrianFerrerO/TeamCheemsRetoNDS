@@ -1,0 +1,14 @@
+html, body{
+    height: 100%;
+}
+
+main{
+    width: 100%;
+}
+
+.transactions-container{
+    height: 90%;
+    max-height: 90%; 
+    margin: 2%;
+    background-color: brown;
+}

@@ -1,0 +1,26 @@
+html, body{
+    height: 100%;
+}
+
+main{
+    width: 100%;
+}
+
+.email-container, .password-container{
+    margin-bottom: 5%;
+}
+
+.sign-in{
+    font-size: 30px;
+}
+
+
+.cheems-aside{
+    background-image:url("./Images/cheems1.png");
+    background-size: 100% 100%;
+}
+
+.cheems-footer{
+    background-image:url("./Images/cheems2.png");
+    background-size: 80% 100%;
+}
