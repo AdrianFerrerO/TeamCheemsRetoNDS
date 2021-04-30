@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from utils import *
+from db import *
 
-#db = client.get_database('Hack')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "6b71f342fb3d3368afe1eacbf620e27e"
@@ -12,12 +12,31 @@ def test():
     return jsonify({"message": "Hello World"})
 
 
+@app.route("/api/auth", methods=['POST'])
+#token_required
+def auth():
+    return make_response(jsonify({"message": True}), 200)
+
+
+@app.route("/api/auth2", methods=['POST'])
+#token_required
+def auth2():
+    return make_response(jsonify({"message": True}), 200)
+
+
+@app.route("/api/products/<items>")
+#@token_required
+def get_products(items)
+    return make_response(jsonify({"message": True}), 200)
+
+
 @app.route("/api/users/<username>")
 #@token_required
-def predict(username):
+def get_user(username):
 
     data = get_user_info(username)
-    return make_response(jsonify({"message": str(username)}), 200)
+    if data:
+        return make_response(jsonify({"message": data}), 200)
     """
     try:
         hardness, prod_rate, quality = get_params(request.args)
@@ -29,9 +48,14 @@ def predict(username):
         return make_response(jsonify({"message": str(e)}), 400)
         """
 
-#@app.route()
 
-@app.route('/login', methods=['POST'])
+@app.route("/api/predict")
+#@token_required
+def predict():
+    return make_response(jsonify({"message": data}), 200)
+
+
+@app.route('/token', methods=['POST'])
 def login():
     try:
         params = request.get_json()
