@@ -128,9 +128,6 @@ let len_of_sample = 10
 
 let url = `http://localhost:5000/api/products/${len_of_sample}`
 
-fetch(url)
-    .then(response => response.json())
-    .then(data => console.log(data));
 
 /* 
 endpoint modelo: http://localhost:5000/api/predict?
@@ -161,7 +158,28 @@ let age = 45 //int
 let m_lat = 10.00
 let m_long = 10.00
 
-let url2 = `http://localhost:5000/api/predict?merchant=${merchant}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
+var url2 = `http://localhost:5000/api/predict?merchant=${merchant}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
+
+document.getElementById("transaction-submit").addEventListener("click", async function(event){
+    event.preventDefault()
+     
+
+    request_response = await fetch(
+    url2, 
+    {method:"GET", 
+    mode:"same-origin", 
+    //headers:{'X-CSRFToken': csrftoken}, 
+    }
+  ).then(async function(response){
+    if (response.status === 200){
+      return await response.text().then(function(data){
+          var transactions = data
+          for (let i = 0; i < transactions.length; i++){
+              new Transaction(transactions[i]["transaction_id"], transactions[i]["merchant"], transactions[i]["category"], transactions[i]["merchant_location"][0], transactions[i]["merchant_location"][1], transactions[i]["amount"], father, true)
+          }
+    });
+  }
+  });})
 
 //fetch(url2)
 //  .then(response => response.json())
