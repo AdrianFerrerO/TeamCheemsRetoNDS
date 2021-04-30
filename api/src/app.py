@@ -5,7 +5,6 @@ from models.models import *
 
 
 app = Flask(__name__)
-#app.config['SECRET_KEY'] = "6b71f342fb3d3368afe1eacbf620e27e"
 
 
 @app.route("/")
@@ -79,58 +78,7 @@ def predict():
     tmp = make_prediction(input)
     return make_response(jsonify({"fraud": str(tmp)}), 200)
 
-"""
-@app.route('/token', methods=['POST'])
-def get_token():
-    try:
-        params = request.get_json()
-        username = params['username']
-        password = params['password']
 
-        if check_identity(username, password):
-            return jsonify({'token' : create_token(username, app.config['SECRET_KEY'])})
-        else: 
-            raise Exception
-
-    except:
-        return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)
-"""
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-
-"""
-user = {
-    "ObjectId": 0,
-    "username": "first_last",
-    "fullname": "Aldo Sandoval",
-    "gender": "M",
-    "age": 18,
-    "coordinates": [20.1154, -99.01154],
-    "password": "password", #generado hasheando el username con md5
-    "password_2": "password_2":#generado hasheando la edad con md5
-    "ip": "127.0.0.1",
-    "ip_hash": "asdgasrfhasdfgherthrt", #generado hasheando la ip con md5
-    "transactions": [{
-        "transaction_id": 123, 
-        "category": "string", 
-        "marchant":"string", 
-        "merchant_location":[12.47546, 45.5466], 
-        "amount":1234
-    },
-    {
-        "transaction_id": 123, 
-        "category": "string", 
-        "marchant":"string", 
-        "merchant_location":[12.47546, 45.5466], 
-        "amount":1234
-    }]
-}
-
-product = {
-    "ObjectId": 0, #Generado por mongo
-    "merchant": "Name",
-    "category": "category",
-    "merchant_location": [25.1354, 25.1234]
-}
-"""

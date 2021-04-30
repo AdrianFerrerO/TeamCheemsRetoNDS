@@ -2,7 +2,7 @@ import jwt
 from flask import jsonify, request
 import datetime
 from functools import wraps
-from security.admins import db
+#from security.admins import db
 import hashlib
 
 

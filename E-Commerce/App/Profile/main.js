@@ -67,3 +67,36 @@ return cookieValue;
 
 var user_info = {"user_name":"seb123", "full_name":"Sebas", "gender":"M", "age":18, "coordinates":[1, 2]}
 var transactions= [{"transaction_id" : 123, "category": "string", "marchant":"string", "merchant_location":[123, 456], "amount":1234}]
+
+/* 
+
+endpoint: http://localhost:5000/api/users/<username>
+
+
+Retorna:
+{
+    "data": {
+    "username": "first_last",
+    "fullname": "Aldo Sandoval",
+    "gender": "M",
+    "age": 18,
+    "coordinates": [20.1154, -99.01154],
+    "ip": "127.0.0.1",
+    "transactions": [{
+        "transaction_id": 123, 
+        "category": "string", 
+        "marchant":"string", 
+        "merchant_location":[12.47546, 45.5466], 
+        "amount":1234
+    },
+    {
+        "transaction_id": 124, 
+        "category": "string", 
+        "marchant":"string", 
+        "merchant_location":[12.47546, 45.5466], 
+        "amount":1234
+    }]
+}
+}
+
+*/
