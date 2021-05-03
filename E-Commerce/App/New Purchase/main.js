@@ -88,13 +88,20 @@ function round(num, decimalPlaces = 0) {
     num = Math.round(num + "e" + decimalPlaces);
     return Number(num + "e" + -decimalPlaces);
 }
+var categories = ['personal_care', 'health_fitness', 'misc_pos', 'travel',
+'kids_pets', 'shopping_pos', 'food_dining', 'home',
+'entertainment', 'shopping_net', 'misc_net', 'grocery_pos',
+'gas_transport', 'grocery_net']
 
-var transactions = {"transaction_id" : 123, "category": "room", "merchant":"string", "merchant_location":[123, 456], "amount":1234}
+var merchants = ['fraud_Kirlin and Sons', 'fraud_Sporer-Keebler',        'fraud_Swaniawski, Nitzsche and Welch', 'fraud_Haley Group',        'fraud_Johnston-Casper', 'fraud_Daugherty LLC',        'fraud_Romaguera Ltd', 'fraud_Reichel LLC',        'fraud_Goyette, Howell and Collier', 'fraud_Kilback Group',        'fraud_Feil, Hilpert and Koss', 'fraud_Gottlieb Group',        'fraud_Connelly-Carter', 'fraud_Bechtelar-Rippin',        'fraud_Lubowitz-Walter', 'fraud_Welch, Rath and Koepp',        'fraud_Hickle Group', 'fraud_Lang, Towne and Schuppe',        'fraud_Morissette LLC', 'fraud_Prosacco LLC',        'fraud_Corwin-Romaguera', 'fraud_Tillman LLC',        'fraud_Veum-Koelpin', 'fraud_Watsica, Haag and Considine',        'fraud_Leannon-Ward', 'fraud_Hintz, Bauch and Smith',        'fraud_Labadie LLC', 'fraud_Eichmann, Hayes and Treutel',        'fraud_Leffler-Goldner', 'fraud_Kautzer and Sons',        'fraud_Ernser-Feest', 'fraud_Zemlak, Tillman and Cremin',        'fraud_Nienow PLC', 'fraud_Lynch-Wisozk', 'fraud_Schiller Ltd',        'fraud_Hoppe-Parisian', 'fraud_Brown-Greenholt',        'fraud_Reilly LLC', 'fraud_Moore, Williamson and Emmerich',        'fraud_Rau-Robel', 'fraud_Fadel, Mertz and Rippin',        'fraud_Crona and Sons', 'fraud_Bahringer, Bergnaum and Quitzon',        'fraud_Koss, Hansen and Lueilwitz',        'fraud_Yost, Schamberger and Windler',        'fraud_Armstrong, Walter and Gottlieb', 'fraud_Friesen Ltd',        'fraud_Champlin and Sons', 'fraud_Bins-Tillman',        'fraud_Douglas-White', 'fraud_Hermiston, Pacocha and Smith',        'fraud_Denesik, Powlowski and Pouros', 'fraud_Nader-Maggio',        "fraud_O'Reilly, Mohr and Purdy", "fraud_O'Connell-Ullrich",        'fraud_Bauch-Blanda', 'fraud_Ruecker, Beer and Collier',        'fraud_Berge-Hills', 'fraud_White and Sons', 'fraud_Adams-Barrows',        'fraud_Pouros-Haag', 'fraud_Hahn, Bahringer and McLaughlin',        'fraud_Ziemann-Waters', 'fraud_Wuckert, Wintheiser and Friesen',        'fraud_Bednar PLC', 'fraud_Kihn Inc', 'fraud_Fisher Inc',        'fraud_Schneider, Hayes and Nikolaus',        "fraud_Greenholt, O'Hara and Balistreri", 'fraud_Gottlieb-Hansen',        'fraud_Douglas, Schneider and Turner',        'fraud_Gutmann, McLaughlin and Wiza', 'fraud_Weber and Sons',        'fraud_Bartoletti and Sons', 'fraud_Powlowski-Weimann',        'fraud_Lakin, Ferry and Beatty', 'fraud_Terry, Johns and Bins',        'fraud_Thiel-Thiel']
 
-for (let i = 0; i < 20; i++){
-    new Transaction(transactions["transaction_id"], transactions["merchant"], transactions["category"], transactions["merchant_location"][0], transactions["merchant_location"][1], father, true)
+var transactions = [{"transaction_id" : 87281462984619, "category": "room", "merchant":"string", "merchant_location":[123, 456], "amount":1234}]
+
+for (let i = 0; i < categories.length; i++){
+    for (let k = 0; k < merchants.length; i++){
+        new Transaction(transactions[i]["transaction_id"], merchants[k], categories[i], transactions[i]["merchant_location"][0], transactions[i]["merchant_location"][1], transactions[i]["amount"], father, true)
+    }
 }
-
 
 /* 
 
@@ -159,26 +166,7 @@ let m_long = 10.00
 
 var url2 = `http://localhost:5000/api/predict?merchant=${merchant}&category=${category}&amt=${amt}&gender=${gender}&lat=${lat}&long=${long}&city_pop=${c_pop}&age=${age}&merch_lat=${m_lat}&merchant_long=${m_long}`
 
-document.getElementById("transaction-submit").addEventListener("click", async function(event){
-    event.preventDefault()
-     
 
-    request_response = await fetch(
-    url2, 
-    {method:"GET", 
-    mode:"same-origin", 
-    //headers:{'X-CSRFToken': csrftoken}, 
-    }
-  ).then(async function(response){
-    if (response.status === 200){
-      return await response.text().then(function(data){
-          var transactions = data
-          for (let i = 0; i < transactions.length; i++){
-              new Transaction(transactions[i]["transaction_id"], transactions[i]["merchant"], transactions[i]["category"], transactions[i]["merchant_location"][0], transactions[i]["merchant_location"][1], transactions[i]["amount"], father, true)
-          }
-    });
-  }
-  });})
 
 //fetch(url2)
 //  .then(response => response.json())
